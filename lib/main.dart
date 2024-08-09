@@ -8,9 +8,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,11 +40,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _khanindex = 0;
 
-  void _incrementCounter() {
+  void _onitemtapped(int index) {
     setState(() {
-      _counter++;
+      _khanindex = index;
     });
   }
 
@@ -60,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(
-              height: 200,
+              height: 130,
               decoration: BoxDecoration(
                 color: Color(0xFFC5CCC7),
                 borderRadius: BorderRadiusDirectional.only(
@@ -150,12 +155,57 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 20,
             ),
             Container(
-              height: 500,
+              width: MediaQuery.of(context).size.width,
+              height: 400,
+              padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(45)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Recent Chat",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.person_2_sharp,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Rahul praba",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Text("Rahul is typing")
+                    ],
+                  )
+                ],
+              ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _khanindex,
+        onTap: _onitemtapped,
       ),
     );
   }
